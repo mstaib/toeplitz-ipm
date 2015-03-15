@@ -9,6 +9,8 @@ for k=1:n
     grad_sum = grad_sum + Rk.*conj(Rk);
 end
 
-grad = -2/N * ifft(grad_sum, N);
+grad_ifft = ifft(grad_sum, N);
+
+grad = -2 * grad_ifft(1:n);
 
 end
