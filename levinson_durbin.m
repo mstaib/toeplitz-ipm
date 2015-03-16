@@ -1,5 +1,5 @@
 function R = levinson_durbin(z)
-% produces lower triangular R so that inv(toeplitz2(z) = R*R'
+% produces lower triangular R so that inv(toeplitz2(z)) = R*R'
 
 z = z(:);
 n = length(z);
