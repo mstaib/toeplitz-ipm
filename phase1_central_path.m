@@ -1,9 +1,13 @@
-function v = phase1_central_path(c, A, b, x_feas, beta, gamma) 
+function v = phase1_central_path(A, b, x_feas, beta, gamma) 
 
-nu = length(c);
+nu = length(x_feas);
 
 v = x_feas;
 tau = 1;
+
+R = levinson_durbin(v);
+grad_v = barrier_grad(v, R);
+c = -grad_v;
 
 while 1
     R = levinson_durbin(v);
@@ -18,7 +22,7 @@ while 1
     end
 
     % z_k = p_tau^+(v)
-    [x, s, y] = p_tau(v, tau, 1, grad_v, hess_v, c, A, b);
+    [x, s, y] = p_tau(v, tau, 1, grad_v, hess_v, c, A, b, gamma);
 
     % tau = t(z_k)
     tau = nu / (s' * x);
