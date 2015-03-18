@@ -7,5 +7,5 @@ right_vec = [s; zeros(m,1); zeros(n,1)];
 
 del_z = left_mat\right_vec;
 del_x = del_z(1:n);
-del_s = del_z((n+1):(n+m));
-del_y = del_z((n+m+1):end);
+del_s = del_z((n+1):(2*n));
+del_y = del_z((2*n+1):end);
