@@ -1,6 +1,7 @@
 function [u, obj] = non_symm_primal_dual_ipm(c, A, b, x_feas, beta, gamma) 
 
-v = phase1_central_path(A, b, x_feas, beta, gamma);
+v = x_feas;
+%v = phase1_central_path(A, b, x_feas, beta, gamma);
 t = 1; %how to get this???
 
 nu = length(v);
@@ -8,7 +9,7 @@ u = v;
 
 obj = [c' * u];
 
-for k=1:2
+for k=1:10
     R = levinson_durbin(u);
     grad_u = barrier_grad(u, R);
     hess_u = barrier_hess(u, R);

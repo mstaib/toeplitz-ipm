@@ -11,10 +11,42 @@ end
 alpha_min = 0;
 alpha_max = (1-beta)/(beta+sqrt(n));
 
-function_to_zero(0);
-function_to_zero((1-beta)/(beta+sqrt(n)));
+top_end_low = 0;
+top_end_high = alpha_max;
+
+while imag(function_to_zero(top_end_high)) == 0
+    top_end_high = top_end_high * 2;
+end
+
+while top_end_high - top_end_low >= 1e-6 && function_to_zero(top_end_low) <= 0
+    mid = (top_end_high + top_end_low) / 2;
+    if imag(function_to_zero(mid)) ~= 0
+        top_end_high = mid;
+    else
+        top_end_low = mid;
+    end
+end
+
+if function_to_zero(top_end_low) <= 0
+    alpha = top_end_low
+else
+    alpha_min = 0;
+    alpha_max = top_end_low;
+    while alpha_max - alpha_min >= 1e-6
+        mid = (alpha_max + alpha_min)/2;
+        if function_to_zero(mid) > 0
+            alpha_max = mid;
+        else
+            alpha_min = mid;
+        end
+    end
+
+    alpha = alpha_min;
+end
+
+function_to_zero(alpha)
 
 % find this by bisection
-alpha = 0.01;
+%alpha = alpha_max*10;
 
 end
