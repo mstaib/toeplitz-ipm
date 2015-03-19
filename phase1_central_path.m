@@ -28,6 +28,6 @@ while 1
     tau = nu / (s' * x)
 
     % v = sigma_tau(z_k)
-    % should be tau instead of 4/tau??
-    v = sigma_tau(x, nu/tau, c, A, b, beta);
+    % should be tau instead of s'*x??
+    v = sigma_tau(x, s'*x, c, A, b, beta);
 end

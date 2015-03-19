@@ -3,6 +3,7 @@ function alpha = get_stepsize(x, s, y, del_x, del_s, del_y, beta, gamma)
 n = length(x);
 
 function val = function_to_zero(alpha)
+    sprintf('%d\n', alpha);
     val = omega(x - alpha*del_x, s - alpha*del_s, y - alpha*del_y);
     val = val - omega(x, s, y);
     val = val - beta^2*gamma -(-gamma - log(1-gamma));
@@ -44,7 +45,21 @@ else
     alpha = alpha_min;
 end
 
-function_to_zero(alpha)
+if abs(function_to_zero(0)) < abs(function_to_zero(alpha))
+    alpha = 0;
+end
+
+alpha
+
+%a = 0:alpha_max/60:alpha_max;
+%vals = zeros(size(a));
+%for kk=1:length(vals)
+%    vals(kk) = function_to_zero(a(kk));
+%end
+%figure;
+%plot(a, vals);
+
+%function_to_zero(alpha)
 
 % find this by bisection
 %alpha = alpha_max*10;

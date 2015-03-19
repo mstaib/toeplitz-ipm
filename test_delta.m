@@ -7,4 +7,4 @@ b = A*u;
 
 c = [2; 1; 1; 1];
 
-[uopt, obj] = non_symm_primal_dual_ipm(c, A, b, u, 0.1, 0.5);
+[uopt, obj, uhist] = non_symm_primal_dual_ipm(c, A, b, u, 0.1, 0.5);
