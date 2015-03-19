@@ -22,7 +22,7 @@ while 1
     end
 
     % z_k = p_tau^+(v)
-    [x, s, y] = p_tau(v, tau, 1, grad_v, hess_v, c, A, b, gamma);
+    [x, s, y] = p_tau(v, tau, 1, grad_v, hess_v, c, A, b, beta, gamma);
 
     % tau = t(z_k)
     tau = nu / (s' * x);

@@ -1,14 +1,10 @@
 rand('state',1);
 
-A = rand(3, 4);
-b = A*[8;4;2;1];
-
-c = ones(4,1);
-
 u = [4;4;2;1];
-R = levinson_durbin(u);
-grad = barrier_grad(u, R);
-hess = barrier_hess(u, R);
 
-t = 0.5;
-[d, y] = delta(c, A, b, grad, hess, t);
+A = rand(3, 4);
+b = A*u;
+
+c = [2; 1; 1; 1];
+
+[uopt, obj] = non_symm_primal_dual_ipm(c, A, b, u, 0.1, 0.5);
