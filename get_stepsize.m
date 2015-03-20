@@ -26,6 +26,8 @@ while top_end_high - top_end_low >= 1e-6 && function_to_zero(top_end_low) <= 0
     else
         top_end_low = mid;
     end
+
+    [top_end_low, top_end_high]
 end
 
 if function_to_zero(top_end_low) <= 0
@@ -49,7 +51,7 @@ if abs(function_to_zero(0)) < abs(function_to_zero(alpha))
     alpha = 0;
 end
 
-alpha
+alpha;
 
 %a = 0:alpha_max/60:alpha_max;
 %vals = zeros(size(a));
