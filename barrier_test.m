@@ -2,7 +2,7 @@ rng(9058);
 
 % set up
 m = 10;
-n = 20;
+n = 30;
 A = rand(m,n);
 x = rand(n,1);
 b = A*x;

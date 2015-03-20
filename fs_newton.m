@@ -11,8 +11,8 @@ function [x_star, nu_star, nt_steps] = fs_newton(A, b, c, x_0, f_val, f_derivs, 
     epsilon = 1e-6;
     while true
        [grad, hess] = f_derivs(c,x);
-       grad = real(grad);
-       hess = real(hess);
+       %grad = real(grad);
+       %hess = real(hess);
        % compute newton step
        [nt_dir, w] = block_elim(hess,A,grad);
        lambda_sq = -nt_dir'*grad;
@@ -22,12 +22,14 @@ function [x_star, nu_star, nt_steps] = fs_newton(A, b, c, x_0, f_val, f_derivs, 
        end
        % line search
        t = 1;
-       while imag(f_val(c,x)) ~= 0 || (f_val(c, x + t*nt_dir) > f_val(c,x) + alpha*t*grad'*nt_dir)
+       while det(toeplitz2(x)) < 0
            t = beta*t;
-          % fprintf('searching\n')
+       end
+       while (f_val(c, x + t*nt_dir) > f_val(c,x) + alpha*t*grad'*nt_dir)
+           t = beta*t;
        end
        % update
-       x = x + t*real(nt_dir);
+       x = x + t*nt_dir;
        nt_steps = nt_steps + 1;
        fprintf('inner iteration\n')
     end

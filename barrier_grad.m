@@ -1,7 +1,7 @@
 function grad = barrier_grad(z, R)
 n = length(z);
-
-N = 2*n;
+% smallest power of 2 greater than 2(n+1)
+N = 2^ceil(log2(2*(n+1)));
 
 grad_sum = zeros(N, 1);
 for k=1:n
@@ -9,8 +9,7 @@ for k=1:n
     grad_sum = grad_sum + Rk.*conj(Rk);
 end
 
-grad_ifft = ifft(grad_sum, N);
-
-grad = -2 * grad_ifft(1:n);
-
+grad = ifft(-2*grad_sum, N);
+grad = grad(1:n);
+grad(1) = grad(1)/2;
 end
