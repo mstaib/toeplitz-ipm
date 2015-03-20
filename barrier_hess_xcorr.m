@@ -15,5 +15,4 @@ for k=1:n
 end
 
 hess = 2*hess;
-
 end

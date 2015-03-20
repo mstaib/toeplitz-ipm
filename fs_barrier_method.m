@@ -28,6 +28,7 @@ function [ x ] = fs_barrier_method(c, A, b, x_0, epsilon, mu, barrier, theta)
         end
         iters = iters + 1;
         t = mu*t;
+        fprintf('outer iteration\n')
     end
     fprintf('Converged.\n  outer iterations = %d, newton steps = %d\n  optval = %f, duality gap = %f\n', iters, sum(history(1,:)), c'*x_star, n/t)
     nu_star = nu_star/t;

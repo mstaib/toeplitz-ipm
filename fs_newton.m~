@@ -2,19 +2,21 @@ function [x_star, nu_star, nt_steps] = fs_newton(A, b, c, x_0, f_val, f_derivs, 
 %FS_NEWTON Feasible start Newton's method
     x = x_0;
     nt_steps = 0;
+    [m,n] = size(A);
     if ~exist('beta','var') || isempty(beta)
         beta=0.5;
     end
     if ~exist('alpha','var') || isempty(alpha)
         alpha=0.01;
     end
-    epsilon = 1e-6;
+    epsilon = 10;
     while true
        [grad, hess] = f_derivs(c,x);
-       %fprintf('hessian condition number: %f\n',cond(hess))
-       %fprintf('number of small hessian eigenvals: %d\n',sum(eig(hess)<=1e-3))
        % compute newton step
-       [nt_dir, w] = solve_kkt(hess,grad,A);
+       KKT = [hess zeros(size(hess,1),m+n);
+              zeros(m,size(hess,2)+m) A;
+              zeros(n,size(hess,2)) A' 
+       [nt_dir, w] = block_elim(hess,A,grad);
        lambda_sq = -nt_dir'*grad;
        lambda_sq
        if lambda_sq/2 <= epsilon
@@ -41,20 +43,7 @@ function [x_star, nu_star, nt_steps] = fs_newton(A, b, c, x_0, f_val, f_derivs, 
     %assert(norm(f_grad(c,x_star) + A'*nu_star) <= 1e-2);
 end
 
-function [nt_dir, w] = solve_kkt(H,g,A)
-    [m,n] = size(A);
-    H = H + A'*A;
-    kkt_A = [H A';A zeros(m,m)];
-    kkt_b = [-g;zeros(m,1)];
-    x = kkt_A\kkt_b;
-    nt_dir = x(1:length(g));
-    w = x(length(g)+1:end);
-end
-
 function [x_1, x_2] = block_elim(hess, A, g)
-    [m,n] = size(A);
-    hess = hess + A'*eye(m)*100*A;
-    cond(hess)
     S = -A*(hess\A');
     b = A*(hess\g);
     x_2 = S\b;

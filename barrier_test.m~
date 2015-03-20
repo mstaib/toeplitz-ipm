@@ -1,4 +1,3 @@
-clear all; close all;
 % set up
 m = 10;
 n = 20;
@@ -11,12 +10,15 @@ while strcmp(cvx_status,'Infeasible')
     b = A*x;
     c = rand(n,1);
     fprintf('Creating a feasible starting point...\n')
+    % create a feasible starting point
+    tic
     cvx_begin quiet
         variable X(n,n) Toeplitz Semidefinite
         minimize 0
         subject to
             A*X(1,:)' == b
     cvx_end
+    toc
 end
 
 X = (X + diag(diag(X)));
@@ -31,11 +33,11 @@ fprintf('Solving with cvx.\n')
 tic
 cvx_begin quiet
     variable X(n,n) Toeplitz Semidefinite
-    minimize (c'*X(1,:)')
+    minimize (c'*X(1,:))
     subject to
         A*X(1,:)' == b
 cvx_end
 toc
-x_cvx = X(1,:)';
+x_cvx = X(1,:)
 
-norm(x_cvx - x_bm)
+norm
