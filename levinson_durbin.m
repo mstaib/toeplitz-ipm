@@ -7,7 +7,7 @@ E = diag(ones(n-1,1), -1);
 
 R = zeros(n);
 
-R(1,1) = 1/sqrt(2*z(1)); % make this 2*z(1) if you want diagonal to be 2*z(1)
+R(1,1) = 1/sqrt(2*z(1)); %1/sqrt(2*z(1)); % make this 2*z(1) if you want diagonal to be 2*z(1)
 
 for k=1:(n-1)
     rk_tilde = [flipud(R(1:k,k)); zeros(n-k,1)];
