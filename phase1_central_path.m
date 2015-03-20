@@ -16,7 +16,7 @@ while 1
 
     % stopping criterion
     [d, y] = delta(c, A, b, grad_v, hess_v, 0);
-    lambda = sqrt(d' * hess_v * d)
+    lambda = sqrt(d' * hess_v * d);
     if lambda <= 2 * beta
         break
     end
@@ -25,7 +25,7 @@ while 1
     [x, s, y] = p_tau(v, tau, 1, grad_v, hess_v, c, A, b, beta, gamma);
 
     % tau = t(z_k)
-    tau = nu / (s' * x)
+    tau = nu / (s' * x);
 
     % v = sigma_tau(z_k)
     % should be tau instead of s'*x??
