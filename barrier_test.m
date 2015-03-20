@@ -15,12 +15,13 @@ while strcmp(cvx_status,'Infeasible')
         variable X(n,n) Toeplitz Semidefinite
         minimize 0
         subject to
-            A*X(1,:)' == b
+            A*(X(1,:)'.*[1/2; ones(n-1,1)]) == b
     cvx_end
 end
 
-X = (X + diag(diag(X)));
+
 x_0 = X(1,:)';
+x_0(1) = x_0(1)/2;
 fprintf('Solving with the barrier method.\n')
 mu=20;
 tic
