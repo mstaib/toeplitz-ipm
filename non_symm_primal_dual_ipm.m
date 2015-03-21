@@ -13,7 +13,7 @@ u = v;
 %[d, y] = delta(c, A, b, grad_v, hess_v, 0.95);
 %lambda = sqrt(d' * hess_v * d)
 
-break
+%break
 
 
 uhist = [u];
